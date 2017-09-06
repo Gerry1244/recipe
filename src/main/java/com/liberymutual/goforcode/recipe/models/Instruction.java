@@ -2,34 +2,28 @@ package com.liberymutual.goforcode.recipe.models;
 
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Instruction {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@ManyToOne
+	private Recipe recipe;
 
-	public class Instructions {
-		@Id
-		@GeneratedValue(strategy = GenerationType.AUTO)
-		private Long id;
-		
-		@ManyToOne
-		private List<Instruction> instruction;
-		
-		
+	private int quantity;
 
+	public Instruction() {
+	}
 
-		private int quantity;
-
-		public Instructions() {
-		}
-
-		public Instructions(List<Instruction> instruction) {
-			this.instruction = instruction;
-
-		}
+	public Instruction(Recipe recipe) {
+		this.recipe = recipe;
 
 	}
 }

@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.aspectj.apache.bcel.generic.Instruction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,28 +23,27 @@ public class Recipe {
 
 	@Column(length = 100, nullable = false)
 	private String title;
+	
 
 	@Column(length = 1000, nullable = true)
 	private String description;
 
 	@OneToMany(mappedBy = "recipe")
-	private List<Instruction> instruction;
-	//
-	// private List<Ingredient> ingredient;
+	private List<Instruction> instructions;
+	
+
+	@OneToMany(mappedBy = "recipe")
+	private List<Ingredient> ingredients;
 
 	private int num_min;
 
-	// public Recipe(String) {
-	//
-	// }
+	public Recipe() {}
 
 	public Recipe(String title, String description, int num_min) {
 		this.title = title;
 		this.description = description;
 		this.num_min = num_min;
-		this.num_min = num_min;
-		this.title = title;
-		this.description= description;
+		ingredients = new ArrayList<Ingredient>();
 	}
 
 	public Long getId() {
@@ -78,6 +76,22 @@ public class Recipe {
 
 	public void setNum_min(int num_min) {
 		this.num_min = num_min;
+	}
+
+	public List<Instruction> getInstructions() {
+		return instructions;
+	}
+
+	public void setInstructions(List<Instruction> instructions) {
+		this.instructions = instructions;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 }
