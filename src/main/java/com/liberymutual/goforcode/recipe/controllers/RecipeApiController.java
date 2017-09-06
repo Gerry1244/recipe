@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.liberymutual.goforcode.recipe.models.Ingredient;
+import com.liberymutual.goforcode.recipe.models.Instruction;
 import com.liberymutual.goforcode.recipe.models.Recipe;
 import com.liberymutual.goforcode.recipe.repositories.IngredientRepository;
+import com.liberymutual.goforcode.recipe.repositories.InstructionRepository;
 import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 @RestController
 @RequestMapping("/recipes")
@@ -22,22 +24,35 @@ import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 public class RecipeApiController {
     private RecipeRepository rcpRepo;
     private IngredientRepository   ingrRepo;
-    public RecipeApiController(RecipeRepository recipeRepo, IngredientRepository ingredientRepo) {
+    private InstructionRepository   instrRepo;
+    
+    
+    public RecipeApiController(RecipeRepository recipeRepo, IngredientRepository ingredientRepo, InstructionRepository instrRepo) {
         this.rcpRepo  = recipeRepo;
+        this.instrRepo = instrRepo;
         this.ingrRepo = ingredientRepo;
         
         List<Recipe> recipes = Arrays.asList(new Recipe[]{
-                new Recipe("Food_1", "Description_1",  10),
-                new Recipe("Food_2", "Description_2",  60),
-                new Recipe("Food_3", "Description_3",  120)
+                new Recipe("Food_1", "Description1",  10),
+                new Recipe("Food_2", "Description2",  60),
+                new Recipe("Food_3", "Description3",  120)
         });
         
         rcpRepo.save(recipes);  
         
-        ingrRepo.save(new Ingredient(recipes.get(0), "Meat",   "ounce", 10));       
-        ingrRepo.save(new Ingredient(recipes.get(1), "Potatoes", "kilo",  2));      
+        ingrRepo.save(new Ingredient(recipes.get(0), "Meat",   "ounce", 10));  
+        ingrRepo.save(new Ingredient(recipes.get(0), "Salt",   "ounce", 10)); 
+        ingrRepo.save(new Ingredient(recipes.get(0), "Milk",   "ounce", 10)); 
+        ingrRepo.save(new Ingredient(recipes.get(1), "Potatoes", "kilo",  2)); 
+        ingrRepo.save(new Ingredient(recipes.get(1), "garlic", "1/3 teaspoon", 2));
+        ingrRepo.save(new Ingredient(recipes.get(1), "Cheese", "kilo",  2));
+        ingrRepo.save(new Ingredient(recipes.get(1), "Ham", "kilo",  2));
+        ingrRepo.save(new Ingredient(recipes.get(1), "Onions", "kilo",  2));
         ingrRepo.save(new Ingredient(recipes.get(2), "Butter",     "pound", 1));
-       
+      
+        instrRepo.save(new Instruction(recipes.get(0), "description1"));       
+        instrRepo.save(new Instruction(recipes.get(1), "descriptions2"));      
+        instrRepo.save(new Instruction(recipes.get(2), "descriptions3"));
     }
     
     @GetMapping("")
@@ -53,8 +68,7 @@ public class RecipeApiController {
         }
         return recipe;
     }
-    
-        
+      
     @PostMapping("")
     public Recipe create(@RequestBody Recipe rcp) {
         return rcpRepo.save(rcp);   
