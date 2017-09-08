@@ -16,20 +16,23 @@ import com.liberymutual.goforcode.recipe.models.Instruction;
 import com.liberymutual.goforcode.recipe.models.Recipe;
 import com.liberymutual.goforcode.recipe.repositories.IngredientRepository;
 import com.liberymutual.goforcode.recipe.repositories.InstructionRepository;
+import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 
 @RestController
 @RequestMapping("/recipes/{id}/instructions")
 public class InstructionApiController {
 
 	private InstructionRepository instructionRepo;
+	private RecipeRepository recipeRepository;
 
-	public InstructionApiController(InstructionRepository instructionRepo) {
+	public InstructionApiController(InstructionRepository instructionRepo, RecipeRepository rcpRepo) {
 		this.instructionRepo = instructionRepo;
+		this.recipeRepository =  rcpRepo;
 	}
 
 	@GetMapping("")
 	public List<Instruction> getAll() {
-		return instructionRepo.findAll();
+		return instructionRepo.findAll(); 
 	}
 
 	@GetMapping("{ins_id}")
@@ -39,14 +42,16 @@ public class InstructionApiController {
 			throw new InstructionNotFoundException();
 		}
 		return instr;
-
+	
 	}
 	
 	 @PostMapping("")
-	    public Instruction create(@RequestBody Instruction ins) {
-	        return instructionRepo.save(ins);   
+	    public Instruction create(@PathVariable long recipeId, @RequestBody Instruction instruction) {
+		Recipe recipe = recipeRepository.findOne(recipeId);
+		instruction.setRecipe(recipe);
+	        return instructionRepo.save(instruction);   
 	    } 
-    
+	
  @DeleteMapping("{ins_id}")
  public Instruction delete(@PathVariable long ins_id) {
      try {

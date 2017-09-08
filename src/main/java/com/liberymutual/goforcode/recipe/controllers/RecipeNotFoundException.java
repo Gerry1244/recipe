@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value=HttpStatus.NOT_FOUND, reason="No such Recipe")
 
-public class RecipeNotFoundException extends Exception {
+public class RecipeNotFoundException extends Exception { 
 	
 	private static final long serialVersionUID = 1L;
 

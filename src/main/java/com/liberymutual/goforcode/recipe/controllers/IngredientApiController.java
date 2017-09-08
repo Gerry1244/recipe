@@ -1,7 +1,13 @@
 package com.liberymutual.goforcode.recipe.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.List;
 
+import org.junit.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,21 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.liberymutual.goforcode.recipe.models.Ingredient;
 import com.liberymutual.goforcode.recipe.models.Recipe;
 import com.liberymutual.goforcode.recipe.repositories.IngredientRepository;
-
+import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 
 @RestController
 @RequestMapping("/recipes/{id}/ingredients")
 public class IngredientApiController {
 
 	private IngredientRepository ingredientRepo;
+	private RecipeRepository recipeRepository;
 
-	public IngredientApiController(IngredientRepository ingredientRepo) {
+	public IngredientApiController(IngredientRepository ingredientRepo, RecipeRepository recipeRepository) {
 		this.ingredientRepo = ingredientRepo;
+		this.recipeRepository = recipeRepository;
 	}
 
 	@GetMapping("")
 	public List<Ingredient> getAll() {
-		return ingredientRepo.findAll();
+		return ingredientRepo.findAll(); 
 	}
 
 	@GetMapping("{ing_id}")
@@ -40,14 +48,16 @@ public class IngredientApiController {
 		return ingr;
 
 	}
-	
-	 @PostMapping("")
-	    public Ingredient create(@RequestBody Ingredient ing) {
-	        return ingredientRepo.save(ing);   
-	    } 
-    
- @DeleteMapping("{ing_id}")
- public Ingredient delete(@PathVariable long ing_id) {
+
+	@PostMapping("")
+	public Ingredient create(@PathVariable Long recipeId, @RequestBody Ingredient ingredient) {
+		Recipe recipe = recipeRepository.findOne(recipeId);
+		ingredient.setRecipe(recipe);
+		return ingredientRepo.save(ingredient);
+	}
+
+	@DeleteMapping("{ing_id}")
+ public Ingredient delete(@PathVariable long ing_id) { 
      try {
     	 Ingredient ingr = ingredientRepo.findOne(ing_id);
     	 ingredientRepo.delete(ing_id);
@@ -55,5 +65,6 @@ public class IngredientApiController {
      } catch (EmptyResultDataAccessException e) {
           return null;
      }
- }
+	}
+
 }

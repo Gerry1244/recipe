@@ -26,6 +26,7 @@ public class Instruction {
 	}
 
 	public Instruction(Recipe recipe, String description) {
+		
 		this.recipe = recipe;
 		this.description = description;
 

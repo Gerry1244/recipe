@@ -26,13 +26,14 @@ public class Ingredient {
 	
 	@JsonIgnore
 	@ManyToOne
+	
 	private Recipe recipe;
 
 	
 	public Ingredient() {
 	}
 
-	public Ingredient(Recipe recipe, String food_name, String units, int quantity) {
+	public Ingredient(Recipe recipe, String food_name, String units, int quantity) { 
 		this.food_name = food_name;
 		this.units = units;
 		this.quantity = quantity;
