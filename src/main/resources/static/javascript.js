@@ -23,7 +23,7 @@ $.getJSON(baseurl, function(data) {
 	if (data.length) { 
 		for (let recipe of data)  {
 			$('<li></li>')
-				.html('<a href= "#" recipe-id=" ' + recipe.id + '">' + recipe.num_min + ', ' + recipe.title + '</a>)')
+				.html('<a href= "#" recipe-id=" ' + recipe.id + '">' + recipe.numberMinutesin + ', ' + recipe.title + '</a>)')
 				.appendTo($('#recipe-list'));
 				
 		}

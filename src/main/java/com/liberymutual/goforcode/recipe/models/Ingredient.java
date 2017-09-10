@@ -17,7 +17,7 @@ public class Ingredient {
 	private Long id;
 
 	@Column(length = 200, nullable = false)
-	private String food_name;
+	private String foodName;
 
 	@Column(length = 50, nullable = true)
 	private String units;
@@ -33,8 +33,8 @@ public class Ingredient {
 	public Ingredient() {
 	}
 
-	public Ingredient(Recipe recipe, String food_name, String units, int quantity) { 
-		this.food_name = food_name;
+	public Ingredient(Recipe recipe, String foodName, String units, int quantity) { 
+		this.foodName = foodName;
 		this.units = units;
 		this.quantity = quantity;
 		this.recipe = recipe; 
@@ -48,12 +48,12 @@ public class Ingredient {
 		this.id = id;
 	}
 
-	public String getFood_name() {
-		return food_name;
+	public String getFoodName() {
+		return foodName; 
 	}
 
-	public void setFood_name(String food_name) {
-		this.food_name = food_name;
+	public void setfoodName(String foodName) {
+		this.foodName = foodName;
 	}
 
 	public String getUnits() {

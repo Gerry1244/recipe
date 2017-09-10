@@ -36,14 +36,14 @@ public class Recipe {
 	@OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
 	private List<Ingredient> ingredients;
 
-	private int num_min;
+	private int numberMinutes;
 
 	public Recipe() {}
 
-	public Recipe(String title, String description, int num_min) { 
+	public Recipe(String title, String description, int numberMinutes) { 
 		this.title = title;
 		this.description = description;
-		this.num_min = num_min;
+		this.numberMinutes = numberMinutes;
 		ingredients = new ArrayList<Ingredient>();
 	}
 
@@ -72,11 +72,11 @@ public class Recipe {
 	}
 
 	public int getNum_min() {
-		return num_min;
+		return numberMinutes;
 	}
 
 	public void setNum_min(int num_min) {
-		this.num_min = num_min;
+		this.numberMinutes = numberMinutes;
 	}
 
 	public List<Instruction> getInstructions() {

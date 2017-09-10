@@ -25,23 +25,23 @@ public class InstructionApiController {
 	private InstructionRepository instructionRepo;
 	private RecipeRepository recipeRepository;
 
-	public InstructionApiController(InstructionRepository instructionRepo, RecipeRepository rcpRepo) {
+	public InstructionApiController(InstructionRepository instructionRepo, RecipeRepository recipeRepo) {
 		this.instructionRepo = instructionRepo;
-		this.recipeRepository =  rcpRepo;
+		this.recipeRepository =  recipeRepo;
 	}
 
-	@GetMapping("")
+	@GetMapping("") 
 	public List<Instruction> getAll() {
 		return instructionRepo.findAll(); 
 	}
 
-	@GetMapping("{ins_id}")
-	public Instruction getOne(@PathVariable long ins_id) throws InstructionNotFoundException {
-		Instruction instr = instructionRepo.findOne(ins_id);
-		if (instr == null) {
+	@GetMapping("{instructionId}")
+	public Instruction getOne(@PathVariable long instructionId) throws InstructionNotFoundException {
+		Instruction instruction = instructionRepo.findOne(instructionId);
+		if (instruction == null) {
 			throw new InstructionNotFoundException();
 		}
-		return instr;
+		return instruction;
 	
 	}
 	
@@ -52,12 +52,12 @@ public class InstructionApiController {
 	        return instructionRepo.save(instruction);   
 	    } 
 	
- @DeleteMapping("{ins_id}")
- public Instruction delete(@PathVariable long ins_id) {
+ @DeleteMapping("{instructionId}")
+ public Instruction delete(@PathVariable long instructionId) {
      try {
-    	 Instruction instr = instructionRepo.findOne(ins_id);
-    	 instructionRepo.delete(ins_id);
-          return instr;            
+    	 Instruction instruction = instructionRepo.findOne(instructionId);
+    	 instructionRepo.delete(instructionId);
+          return instruction;            
      } catch (EmptyResultDataAccessException e) {
           return null;
      }

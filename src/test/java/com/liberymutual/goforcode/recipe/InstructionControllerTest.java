@@ -35,40 +35,39 @@ import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 
 public class InstructionControllerTest {
     
-    private RecipeRepository    rcpRepo; 
-    private IngredientRepository      ingrRepo;
-    private InstructionRepository     instrRepo;      
+    private RecipeRepository    recipeRepo; 
+    private IngredientRepository      ingredientRepo;
+    private InstructionRepository     instructionRepo;      
     private InstructionApiController    controller;
     
                             
     @Before
     public void setUp() { 
-        rcpRepo = mock(RecipeRepository.class); 
-        ingrRepo = mock(IngredientRepository.class); 
-        instrRepo = mock(InstructionRepository.class); 
-        controller = new InstructionApiController(instrRepo, rcpRepo); 
+    	recipeRepo = mock(RecipeRepository.class); 
+        ingredientRepo = mock(IngredientRepository.class); 
+        instructionRepo = mock(InstructionRepository.class); 
+        controller = new InstructionApiController(instructionRepo, recipeRepo); 
          
     } 
     
     @Test
-	public void test_getOne_throws_instructionNotFound_when_no_instructions_returned_from_instrRepo() {
+	public void test_getOne_throws_instructionNotFound_when_no_instructions_returned_from_instructionRepo() {
 		try {
 
 			controller.getOne(1);
 
-			// This line of code SHOULD NOT run
-			fail("The controller did not throw the StuffNotFOundException");
-		} catch (InstructionNotFoundException snfe) {}
+			fail("The controller did not throw the InstructionNotFoundException");
+		} catch (InstructionNotFoundException inf) {}
 	}
     
 	@Test
-	public void test_getAll_returns_all_Instructions_returned_by_the_instrRepo() {
+	public void test_getAll_returns_all_Instructions_returned_by_the_instructionRepo() {
 		// arrange
 		ArrayList<Instruction> instruction = new ArrayList<Instruction>();
 		instruction.add(new Instruction());
 		instruction.add(new Instruction()); 
 
-		when(instrRepo.findAll()).thenReturn(instruction);
+		when(instructionRepo.findAll()).thenReturn(instruction);
 
 		// Act
 		List<Instruction> actual = controller.getAll();
@@ -76,7 +75,7 @@ public class InstructionControllerTest {
 		// Assert
 		assertThat(actual.size()).isEqualTo(2);
 		assertThat(actual.get(0)).isSameAs(instruction.get(0));
-		verify(instrRepo).findAll();
+		verify(instructionRepo).findAll();
 		
 	}
     
@@ -86,7 +85,7 @@ public class InstructionControllerTest {
             
         // Arrange
         Instruction instruction = new Instruction();               
-        when(instrRepo.save(instruction)).thenReturn(instruction); 
+        when(instructionRepo.save(instruction)).thenReturn(instruction); 
             
         // Act 
         Instruction actual = controller.create(11L, instruction);
@@ -100,29 +99,29 @@ public class InstructionControllerTest {
     @Test
     public void test_delete_returns_instruction_deleted_when_instruction_is_found() {
         // Arrange
-    	Instruction rcp = new Instruction();
-        when(instrRepo.findOne(33L)).thenReturn(rcp);
+    	Instruction recipe = new Instruction();
+        when(instructionRepo.findOne(33L)).thenReturn(recipe);
         
         // Act  
         Instruction actual = controller.delete(33L);
         
         // Assert
-        assertThat(rcp).isSameAs(actual);  
-        verify(instrRepo).findOne(33L);   
+        assertThat(recipe).isSameAs(actual);  
+        verify(instructionRepo).findOne(33L);   
     }
     
     @Test
 	public void test_that_null_is_returned_when_findOne_throws_EmptyResultDataAccess( ) throws InstructionNotFoundException {
 		
 		//arrange
-		when(instrRepo.findOne(8l)).thenThrow(new EmptyResultDataAccessException(0));
+		when(instructionRepo.findOne(8l)).thenThrow(new EmptyResultDataAccessException(0));
 		
 		//Act
 		Instruction actual = controller.delete(8L);
 		
 		//assert
 		assertThat(actual).isNull();
-		verify(instrRepo).findOne(8l);
+		verify(instructionRepo).findOne(8l);
 		
 	}
 }

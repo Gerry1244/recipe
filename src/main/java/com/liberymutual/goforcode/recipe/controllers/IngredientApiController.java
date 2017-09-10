@@ -31,21 +31,21 @@ public class IngredientApiController {
 
 	public IngredientApiController(IngredientRepository ingredientRepo, RecipeRepository recipeRepository) {
 		this.ingredientRepo = ingredientRepo;
-		this.recipeRepository = recipeRepository;
+		this.recipeRepository = recipeRepository; 
 	}
 
-	@GetMapping("")
+	@GetMapping("") 
 	public List<Ingredient> getAll() {
 		return ingredientRepo.findAll(); 
 	}
 
-	@GetMapping("{ing_id}")
-	public Ingredient getOne(@PathVariable long ing_id) throws IngredientNotFoundException {
-		Ingredient ingr = ingredientRepo.findOne(ing_id);
-		if (ingr == null) {
+	@GetMapping("{ingredient_id}")
+	public Ingredient getOne(@PathVariable long ingredientId) throws IngredientNotFoundException {
+		Ingredient ingredient = ingredientRepo.findOne(ingredientId); 
+		if (ingredient == null) {
 			throw new IngredientNotFoundException();
 		}
-		return ingr;
+		return ingredient;
 
 	}
 
@@ -56,12 +56,12 @@ public class IngredientApiController {
 		return ingredientRepo.save(ingredient);
 	}
 
-	@DeleteMapping("{ing_id}")
- public Ingredient delete(@PathVariable long ing_id) { 
+	@DeleteMapping("{ingredientId}")
+ public Ingredient delete(@PathVariable long ingredientId) { 
      try {
-    	 Ingredient ingr = ingredientRepo.findOne(ing_id);
-    	 ingredientRepo.delete(ing_id);
-          return ingr;            
+    	 Ingredient ingredient = ingredientRepo.findOne(ingredientId);
+    	 ingredientRepo.delete(ingredientId);
+          return ingredient;            
      } catch (EmptyResultDataAccessException e) {
           return null;
      }

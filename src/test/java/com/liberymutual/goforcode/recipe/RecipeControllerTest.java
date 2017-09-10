@@ -33,33 +33,33 @@ import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 
 public class RecipeControllerTest {
 
-	private RecipeRepository rcpRepo;
-	private IngredientRepository ingrRepo;
-	private InstructionRepository instrRepo;
+	private RecipeRepository recipeRepo;
+	private IngredientRepository ingredientRepo;
+	private InstructionRepository instructionRepo;
 	private RecipeApiController controller;
 
 	@Before
 	public void setUp() {
-		rcpRepo = mock(RecipeRepository.class);
-		ingrRepo = mock(IngredientRepository.class);
-		instrRepo = mock(InstructionRepository.class);
-		controller = new RecipeApiController(rcpRepo, ingrRepo, instrRepo);
+		recipeRepo = mock(RecipeRepository.class);
+		ingredientRepo = mock(IngredientRepository.class);
+		instructionRepo = mock(InstructionRepository.class);
+		controller = new RecipeApiController(recipeRepo, ingredientRepo, instructionRepo);
 
-	} 
-
+	}  
+ 
 	@Test
-	public void test_getOne_returns_a_recipe_from_Recipe_repo() throws RecipeNotFoundException {
+	public void test_getOne_returns_a_recipe_from_recipeRepo() throws RecipeNotFoundException {
 
 		// arrange
 		Recipe Description = new Recipe();
-		when(rcpRepo.findOne(23L)).thenReturn(Description); 
+		when(recipeRepo.findOne(23L)).thenReturn(Description); 
 
 		// Act
 		Recipe actual = controller.getOne(23L);
  
 		// Assert
 		assertThat(actual).isSameAs(Description);
-		verify(rcpRepo).findOne(23L);
+		verify(recipeRepo).findOne(23L);
 
 	}
 
@@ -82,16 +82,16 @@ public class RecipeControllerTest {
 		Recipe recipe = new Recipe();
 		String description = "Hamburger";
 		recipe.setTitle(description);
-		ArrayList<Recipe> rcpList = new ArrayList<Recipe>();
-		rcpList.add(recipe);
-		when(rcpRepo.findByTitleContaining(description)).thenReturn(rcpList);
+		ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+		recipeList.add(recipe);
+		when(recipeRepo.findByTitleContaining(description)).thenReturn(recipeList);
 		
 		// Act
 		List <Recipe> actual = controller.getAll(description);
 
 		// Assert
 		assertThat(description).isEqualTo(recipe.getTitle());
-		assertThat(actual).isSameAs(rcpList);
+		assertThat(actual).isSameAs(recipeList);
 
 	}
 	 
@@ -100,15 +100,15 @@ public class RecipeControllerTest {
 	public void test_update_saves_modified_recipe() {
 
 		// Arrange
-		Recipe rcp = new Recipe();
-		when(rcpRepo.save(rcp)).thenReturn(rcp);
+		Recipe recipe = new Recipe();
+		when(recipeRepo.save(recipe)).thenReturn(recipe);
 
 		// Act
-		Recipe actual = controller.update(rcp, 11L);
+		Recipe actual = controller.update(recipe, 11L);
 
 		// Assert
-		assertThat(actual).isSameAs(rcp);
-		assertThat(actual.getId()).isEqualTo(11L);
+		assertThat(actual).isSameAs(recipe);
+		assertThat(actual.getId()).isEqualTo(11L);  
 
 	}
 
@@ -116,30 +116,30 @@ public class RecipeControllerTest {
 	@Test
 	public void test_delete_returns_recipe_deleted_when_recipe_is_found() {
 		// Arrange
-		Recipe rcp = new Recipe();
-		when(rcpRepo.findOne(33L)).thenReturn(rcp);
+		Recipe recipe = new Recipe();
+		when(recipeRepo.findOne(33L)).thenReturn(recipe);
 
 		// Act
 		Recipe actual = controller.delete(33L);
 
 		// Assert
-		assertThat(rcp).isSameAs(actual);
-		verify(rcpRepo).delete(33L);
-		verify(rcpRepo).findOne(33L);
+		assertThat(recipe).isSameAs(actual);
+		verify(recipeRepo).delete(33L);
+		verify(recipeRepo).findOne(33L);
 	}
 	
     @Test
 	public void test_that_null_is_returned_when_findOne_throws_EmptyResultDataAccess( ) throws RecipeNotFoundException {
 		
 		//arrange
-		when(rcpRepo.findOne(8l)).thenThrow(new EmptyResultDataAccessException(0));
+		when(recipeRepo.findOne(8l)).thenThrow(new EmptyResultDataAccessException(0));
 		
 		//Act
 		Recipe actual = controller.delete(8L);
 		
 		//assert
 		assertThat(actual).isNull();
-		verify(rcpRepo).findOne(8l);
+		verify(recipeRepo).findOne(8l);
 		
 	}
 }

@@ -21,49 +21,49 @@ import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 @RestController
 @RequestMapping("/recipes")
 
-public class RecipeApiController {
+public class RecipeApiController { 
 	private RecipeRepository recipeRepo;
-	private IngredientRepository ingrRepo;
-	private InstructionRepository instrRepo;
-
+	private IngredientRepository ingredientRepo;
+	private InstructionRepository instructionRepo;
+ 
 	public RecipeApiController(RecipeRepository recipeRepo, IngredientRepository ingredientRepo,
-			InstructionRepository instrRepo) {
+			InstructionRepository instructionRepo) {
 		this.recipeRepo = recipeRepo;
-		this.instrRepo = instrRepo;
-		this.ingrRepo = ingredientRepo;
+		this.instructionRepo = instructionRepo;
+		this.ingredientRepo = ingredientRepo;
 
-		List<Recipe> recipes = Arrays.asList(new Recipe[] { new Recipe("foodOne", "descriptionOne", 10),
-				new Recipe("foodTwo", "descriptionTwo", 60), new Recipe("foodThree", "descriptionThree", 120) });
+		List<Recipe> recipes = Arrays.asList(new Recipe[] { new Recipe("Hamburgers", "Who doesn't like hamburgers done on the grill?", 10),
+				new Recipe("Mashed Potatoes", "Whipped--Not Lumpy...", 60), new Recipe("Noodles", "Every kid's favorit meal", 120) });
 
 		recipeRepo.save(recipes);
 
-		ingrRepo.save(new Ingredient(recipes.get(0), "Meat", "ounce", 10));
-		ingrRepo.save(new Ingredient(recipes.get(0), "Salt", "ounce", 10));
-		ingrRepo.save(new Ingredient(recipes.get(0), "Gravy", "ounce", 10));
-		ingrRepo.save(new Ingredient(recipes.get(0), "Herbs", "ounce", 10));
-		ingrRepo.save(new Ingredient(recipes.get(0), "Butter", "ounce", 10));
-		ingrRepo.save(new Ingredient(recipes.get(0), "Seasonings", "ounce", 10));
-		ingrRepo.save(new Ingredient(recipes.get(1), "Potatoes", "kilo", 2));
-		ingrRepo.save(new Ingredient(recipes.get(1), "garlic", "1/3 teaspoon", 2));
-		ingrRepo.save(new Ingredient(recipes.get(1), "Cheese", "kilo", 2));
-		ingrRepo.save(new Ingredient(recipes.get(1), "Ham", "kilo", 2));
-		ingrRepo.save(new Ingredient(recipes.get(1), "Onions", "kilo", 2));
-		ingrRepo.save(new Ingredient(recipes.get(2), "Butter", "pound", 1));
-		ingrRepo.save(new Ingredient(recipes.get(2), "Eggs", "pound", 1));
-		ingrRepo.save(new Ingredient(recipes.get(2), "Flour", "pound", 1));
-		ingrRepo.save(new Ingredient(recipes.get(2), "Noodles", "pound", 1));
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Meat", "ounce", 10)); 
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Salt", "ounce", 10));
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Gravy", "ounce", 10)); 
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Herbs", "ounce", 10));
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Butter", "ounce", 10));
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Seasonings", "ounce", 10));
+		ingredientRepo.save(new Ingredient(recipes.get(1), "Potatoes", "kilo", 2));
+		ingredientRepo.save(new Ingredient(recipes.get(1), "garlic", "1/3 teaspoon", 2));
+		ingredientRepo.save(new Ingredient(recipes.get(1), "Cheese", "kilo", 2));
+		ingredientRepo.save(new Ingredient(recipes.get(1), "Ham", "kilo", 2));
+		ingredientRepo.save(new Ingredient(recipes.get(1), "Onions", "kilo", 2));
+		ingredientRepo.save(new Ingredient(recipes.get(2), "Butter", "pound", 1));
+		ingredientRepo.save(new Ingredient(recipes.get(2), "Eggs", "pound", 1));
+		ingredientRepo.save(new Ingredient(recipes.get(2), "Flour", "pound", 1));
+		ingredientRepo.save(new Ingredient(recipes.get(2), "Noodles", "pound", 1));
 
-		instrRepo.save(new Instruction(recipes.get(0), "descriptionOne"));
-		instrRepo.save(new Instruction(recipes.get(1), "descriptionTwo"));
-		instrRepo.save(new Instruction(recipes.get(2), "descriptionThree"));
+		instructionRepo.save(new Instruction(recipes.get(0), "Who doesn't like hamburgers done on the grill?"));
+		instructionRepo.save(new Instruction(recipes.get(1), "Whipped--Not Lumpy..."));
+		instructionRepo.save(new Instruction(recipes.get(2), "Every kid's favorit meal"));
 	}
 
 	@GetMapping("")
     public List<Recipe> getAll(String title) {        
-        List<Recipe> rcp;
+        List<Recipe> recipe;
         if (title != null) {
-            rcp = recipeRepo.findByTitleContaining(title);
-            return rcp;
+        	recipe = recipeRepo.findByTitleContaining(title);
+            return recipe;
         }    
         return recipeRepo.findAll();
 	}
