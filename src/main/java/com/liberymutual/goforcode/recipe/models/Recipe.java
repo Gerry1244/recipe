@@ -36,9 +36,9 @@ public class Recipe {
 	@OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
 	private List<Ingredient> ingredients;
 
-	private int numberMinutes;
+	private int numberMinutes; 
 
-	public Recipe() {}
+	public Recipe() {}  
 
 	public Recipe(String title, String description, int numberMinutes) { 
 		this.title = title;

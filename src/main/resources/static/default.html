@@ -5,9 +5,21 @@
 </head>
 
 <body>
-<h1>Hello</h1>
-<ul id="recipe-list"></ul></ul>
-<div id="recipe-detail"></div></div>
+<form id="create-recipe-form" method ="post" action="/recipes">
+<br>
+
+<input type="text" id="title" name="title" placeholder="Title">
+
+<input required type="text"  id="description" name="description" placeholder="Description">
+<br>
+<button>Create this thing</button>
+
+</form>
+
+
+
+<ul id="recipe-list"></ul>
+<div id="recipe-detail"></div>
 
 	<script
   src="https://code.jquery.com/jquery-3.2.1.js"

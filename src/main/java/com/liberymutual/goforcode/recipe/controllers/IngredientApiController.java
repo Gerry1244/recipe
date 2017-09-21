@@ -23,7 +23,7 @@ import com.liberymutual.goforcode.recipe.repositories.IngredientRepository;
 import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 
 @RestController
-@RequestMapping("/recipes/{id}/ingredients")
+@RequestMapping("/recipes/{recipeId}/ingredients")
 public class IngredientApiController {
 
 	private IngredientRepository ingredientRepo;
@@ -39,7 +39,7 @@ public class IngredientApiController {
 		return ingredientRepo.findAll(); 
 	}
 
-	@GetMapping("{ingredient_id}")
+	@GetMapping("{ingredient_id}") 
 	public Ingredient getOne(@PathVariable long ingredientId) throws IngredientNotFoundException {
 		Ingredient ingredient = ingredientRepo.findOne(ingredientId); 
 		if (ingredient == null) {

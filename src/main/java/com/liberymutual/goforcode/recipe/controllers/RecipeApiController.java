@@ -26,18 +26,18 @@ public class RecipeApiController {
 	private IngredientRepository ingredientRepo;
 	private InstructionRepository instructionRepo;
  
-	public RecipeApiController(RecipeRepository recipeRepo, IngredientRepository ingredientRepo,
+	public RecipeApiController(RecipeRepository recipeRepo, IngredientRepository ingredientRepo, 
 			InstructionRepository instructionRepo) {
-		this.recipeRepo = recipeRepo;
-		this.instructionRepo = instructionRepo;
-		this.ingredientRepo = ingredientRepo;
+		this.recipeRepo = recipeRepo; 
+		this.instructionRepo = instructionRepo;  
+		this.ingredientRepo = ingredientRepo; 
 
 		List<Recipe> recipes = Arrays.asList(new Recipe[] { new Recipe("Hamburgers", "Who doesn't like hamburgers done on the grill?", 10),
-				new Recipe("Mashed Potatoes", "Whipped--Not Lumpy...", 60), new Recipe("Noodles", "Every kid's favorit meal", 120) });
+				new Recipe("Mashed Potatoes", "Whipped--Not Lumpy...", 60), new Recipe("Noodles", "Every kid's favorite meal", 120) });
 
-		recipeRepo.save(recipes);
+		recipeRepo.save(recipes); 
 
-		ingredientRepo.save(new Ingredient(recipes.get(0), "Meat", "ounce", 10)); 
+		ingredientRepo.save(new Ingredient(recipes.get(0), "Meat", "ounce", 10));  
 		ingredientRepo.save(new Ingredient(recipes.get(0), "Salt", "ounce", 10));
 		ingredientRepo.save(new Ingredient(recipes.get(0), "Gravy", "ounce", 10)); 
 		ingredientRepo.save(new Ingredient(recipes.get(0), "Herbs", "ounce", 10));

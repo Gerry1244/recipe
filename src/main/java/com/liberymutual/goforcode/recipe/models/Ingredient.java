@@ -32,7 +32,7 @@ public class Ingredient {
 	
 	public Ingredient() {
 	}
-
+ 
 	public Ingredient(Recipe recipe, String foodName, String units, int quantity) { 
 		this.foodName = foodName;
 		this.units = units;

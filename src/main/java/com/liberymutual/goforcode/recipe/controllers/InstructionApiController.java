@@ -19,7 +19,7 @@ import com.liberymutual.goforcode.recipe.repositories.InstructionRepository;
 import com.liberymutual.goforcode.recipe.repositories.RecipeRepository;
 
 @RestController
-@RequestMapping("/recipes/{id}/instructions")
+@RequestMapping("/recipes/{recipeId}/instructions")
 public class InstructionApiController {
 
 	private InstructionRepository instructionRepo;
